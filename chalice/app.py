@@ -367,8 +367,8 @@ class Response(object):
                 # json serialization results in a string type, but for binary
                 # content types we need a type bytes().  So we need to special
                 # case this scenario and encode the JSON body to bytes().
-                if isinstance(body, str):
-                    body = body.encode('utf-8')
+                # if not isinstance(body, bytes):
+                body = body if isinstance(body, bytes) else body.encode('utf-8')
             body = self._base64encode(body)
             response_dict['isBase64Encoded'] = True
         response_dict['body'] = body
