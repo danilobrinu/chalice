@@ -1585,8 +1585,10 @@ def test_bytes_when_binary_type_is_application_json():
     def index():
         blob = json.dumps({'hello': 'world'}).encode('utf-8')
         payload = gzip.compress(blob)
-        return Response(body=payload,
-                        status_code=200,
-                        headers={'Content-Type': 'application/json', 'Content-Encoding': 'gzip'})
+        custom_headers = {
+            'Content-Type': 'application/json',
+            'Content-Encoding': 'gzip'
+        }
+        return Response(body=payload, status_code=200, headers=custom_headers)
 
     return demo
