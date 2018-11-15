@@ -793,6 +793,7 @@ a chalice specific ``Response`` class.  This behavior allows you to:
 Here's an example of this:
 
 .. code-block:: python
+
     import json
     import gzip
     from chalice import Chalice, Response
@@ -808,7 +809,9 @@ Here's an example of this:
             'Content-Type': 'application/json',
             'Content-Encoding': 'gzip'
         }
-        return Response(body=payload, status_code=200, headers=custom_headers)
+        return Response(body=payload,
+                        status_code=200,
+                        headers=custom_headers)
 
 
 
