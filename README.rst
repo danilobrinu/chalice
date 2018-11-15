@@ -804,9 +804,13 @@ Here's an example of this:
     def index():
         blob = json.dumps({'hello': 'world'}).encode('utf-8')
         payload = gzip.compress(blob)
+        custom_headers = {
+            'Content-Type': 'application/json',
+            'Content-Encoding': 'gzip'
+        }
         return Response(body=payload,
                         status_code=200,
-                        headers={'Content-Type': 'application/json', 'Content-Encoding': 'gzip'})
+                        headers=custom_headers)
 
 Tutorial: CORS Support
 ======================
