@@ -777,7 +777,7 @@ This will result in a plain text response body::
 
 
 Tutorial: GZIP compression for json
-=======================
+===================================
 The return value from a chalice view function is serialized as JSON as the
 response body returned back to the caller.  This makes it easy to create
 rest APIs that return JSON response bodies.
@@ -808,9 +808,9 @@ Here's an example of this:
             'Content-Type': 'application/json',
             'Content-Encoding': 'gzip'
         }
-        return Response(body=payload,
-                        status_code=200,
-                        headers=custom_headers)
+        return Response(body=payload, status_code=200, headers=custom_headers)
+
+
 
 Tutorial: CORS Support
 ======================
