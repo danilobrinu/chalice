@@ -58,7 +58,7 @@ You can connect a lambda function to an S3 event:
 
     app = Chalice(app_name="helloworld")
 
-    # Whenver an object is uploaded to 'mybucket'
+    # Whenever an object is uploaded to 'mybucket'
     # this lambda function will be invoked.
 
     @app.on_s3_event(bucket='mybucket')
@@ -1148,7 +1148,7 @@ to the URI of your lambda function.
 
     authorizer = CustomAuthorizer(
         'MyCustomAuth', header='Authorization',
-        authorizer_uri=('arn:aws:apigateway:region:lambda:path/2015-03-01'
+        authorizer_uri=('arn:aws:apigateway:region:lambda:path/2015-03-31'
                         '/functions/arn:aws:lambda:region:account-id:'
                         'function:FunctionName/invocations'))
 

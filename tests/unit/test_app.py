@@ -172,7 +172,7 @@ def test_can_encode_binary_json(sample_app):
         headers={'Content-Type': 'application/json'}
     )
     encoded_response = response.to_dict(sample_app.api.binary_types)
-    assert encoded_response['body'] == 'eyJmb28iOiAiYmFyIn0='
+    assert encoded_response['body'] == 'eyJmb28iOiJiYXIifQ=='
 
 
 def test_can_parse_route_view_args():
@@ -511,7 +511,7 @@ def test_can_return_response_object(create_event):
 
     event = create_event('/index', 'GET', {})
     response = demo(event, context=None)
-    assert response == {'statusCode': 200, 'body': '{"foo": "bar"}',
+    assert response == {'statusCode': 200, 'body': '{"foo":"bar"}',
                         'headers': {'Content-Type': 'application/json'}}
 
 
@@ -852,7 +852,7 @@ class TestCORSConfig(object):
     def test_not_eq_different_type(self):
         cors_config = app.CORSConfig()
         different_type_obj = object()
-        assert cors_config != different_type_obj
+        assert not cors_config == different_type_obj
 
     def test_not_eq_differing_configurations(self):
         cors_config = app.CORSConfig()
@@ -1313,6 +1313,21 @@ def test_debug_mode_changes_log_level():
     test_app.debug = True
     assert test_app.debug is True
     assert test_app.log.getEffectiveLevel() == logging.DEBUG
+
+
+def test_internal_exception_debug_false(capsys, create_event):
+    test_app = app.Chalice('logger-test-5', debug=False)
+
+    @test_app.route('/error')
+    def error():
+        raise Exception('Something bad happened')
+
+    event = create_event('/error', 'GET', {})
+    test_app(event, context=None)
+    out, err = capsys.readouterr()
+    assert 'logger-test-5' in out
+    assert 'Internal Error' in out
+    assert 'Something bad happened' in out
 
 
 def test_raw_body_is_none_if_body_is_none():
